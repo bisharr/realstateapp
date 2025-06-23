@@ -6,7 +6,7 @@ function Header() {
   console.log(location);
   const navigate = useNavigate();
   function pathMatch(route) {
-    if (route === location.pathname) return true;
+    return route === location.pathname;
   }
 
   return (
@@ -25,7 +25,9 @@ function Header() {
             <li
               onClick={() => navigate("/")}
               className={` cursor-pointer py-3 text-sm font-semibold text-gray-400 border-b-[3px] border-b-transparent ${
-                pathMatch("/") && "text-black border-b-red-500"
+                pathMatch("/")
+                  ? "text-black border-b-red-500"
+                  : "text-gray-400 border-b-transparent"
               } `}
             >
               Home
@@ -33,7 +35,9 @@ function Header() {
             <li
               onClick={() => navigate("/offers")}
               className={` cursor-pointer py-3 text-sm font-semibold text-gray-400 border-b-[3px] border-b-transparent ${
-                pathMatch("/offers") && "text-black border-b-red-500"
+                pathMatch("/offers")
+                  ? "text-black border-b-red-500"
+                  : "text-gray-400 border-b-transparent"
               } `}
             >
               Offers
@@ -41,7 +45,9 @@ function Header() {
             <li
               onClick={() => navigate("/signin")}
               className={` cursor-pointer py-3 text-sm font-semibold text-gray-400 border-b-[3px] border-b-transparent ${
-                pathMatch("/signin") && "text-black border-b-red-500"
+                pathMatch("/signin")
+                  ? "text-black border-b-red-500"
+                  : "text-gray-400 border-b-transparent"
               } `}
             >
               Sign in

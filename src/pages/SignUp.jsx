@@ -42,6 +42,7 @@ function SignUp() {
         displayName: name,
       });
       const user = userCredential.user;
+      console.log(user);
 
       const formDataCopy = { ...formData };
       delete formDataCopy.password;
@@ -51,7 +52,11 @@ function SignUp() {
       navigate("/");
       toast.success(" Sign up was Successful");
     } catch (error) {
-      toast.error("something went wrong with registration");
+      if (error.code === "auth/email-already-in-use") {
+        toast.error("This email already exists");
+      } else {
+        toast.error("Something went wrong with registration");
+      }
     }
   }
   return (
@@ -130,14 +135,14 @@ function SignUp() {
             >
               Sign Up
             </button>
+            <div className="my-4 before:border-t flex before:flex-1 items-center before:border-e-gray-300 after:flex-1 after:border-gray-300 after:border-t">
+              <p className="text-center font-semibold mx-4">OR</p>
+            </div>
+            <GoogleButton />
           </form>
           {/* SignIn Button */}
 
           {/* Or div */}
-          <div className="my-4 before:border-t flex before:flex-1 items-center before:border-e-gray-300 after:flex-1 after:border-gray-300 after:border-t">
-            <p className="text-center font-semibold mx-4">OR</p>
-          </div>
-          <GoogleButton />
         </div>
       </div>
     </section>
