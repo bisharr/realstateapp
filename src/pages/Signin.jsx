@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
-import { Link } from "react-router";
+import { Link, Navigate, useNavigate } from "react-router";
 import GoogleButton from "./GoogleButton";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { toast } from "react-toastify";
 function Signin() {
   const [formData, setFormData] = useState({
     email: "",
@@ -10,12 +12,42 @@ function Signin() {
   });
   const [isPasswordVisible, setIsPasswordisVisible] = useState(false);
   const { password, email } = formData;
+  const navigate = useNavigate();
 
   function onChange(e) {
     setFormData((previous) => ({
       ...previous,
       [e.target.id]: e.target.value,
     }));
+  }
+
+  async function OnSignInClick(e) {
+    e.preventDefault();
+    try {
+      const auth = getAuth();
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      console.log("Signed in user:", userCredential.user);
+      if (userCredential.user) {
+        navigate("/");
+      }
+
+      toast.success("Sign in successful");
+    } catch (error) {
+      console.error("Sign-in error:", error);
+      if (error.code === "auth/wrong-password") {
+        toast.error("Incorrect password");
+      } else if (error.code === "auth/user-not-found") {
+        toast.error("User does not exist");
+      } else if (error.code === "auth/invalid-email") {
+        toast.error("Invalid email format");
+      } else {
+        toast.error("Something went wrong");
+      }
+    }
   }
   return (
     <section>
@@ -25,7 +57,11 @@ function Signin() {
           <img className="rounded-2xl w-full" src="/signimg.jpeg" alt="key" />
         </div>
         <div className="w-full md:w-[67%] lg:w-[40%]  ml-20">
-          <form className="flex flex-col gap-3 items-center" action="">
+          <form
+            onSubmit={OnSignInClick}
+            className="flex flex-col gap-3 items-center"
+            action=""
+          >
             <input
               className="w-full px-4 py-2 text-xl text-gray-700 bg-white border-gray-300 rounded transition-all ease-in-out "
               type="email"
@@ -74,14 +110,15 @@ function Signin() {
                 </Link>
               </p>
             </div>
+            <button
+              className="w-full bg-blue-600 text-white px-7 py-3 text-sm font-medium uppercase roundedn hover:shadow-lg active:bg-blue-800 shadow-md hover:bg-blue-700 transition-all duration-200 ease-in-out mt-3"
+              type="submit"
+            >
+              Sign In
+            </button>
           </form>
           {/* SignIn Button */}
-          <button
-            className="w-full bg-blue-600 text-white px-7 py-3 text-sm font-medium uppercase roundedn hover:shadow-lg active:bg-blue-800 shadow-md hover:bg-blue-700 transition-all duration-200 ease-in-out mt-3"
-            type="submit"
-          >
-            Sign In
-          </button>
+
           {/* Or div */}
           <div className="my-4 before:border-t flex before:flex-1 items-center before:border-e-gray-300 after:flex-1 after:border-gray-300 after:border-t">
             <p className="text-center font-semibold mx-4">OR</p>
