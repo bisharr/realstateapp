@@ -8,6 +8,7 @@ import Signin from "./pages/Signin";
 import SignUp from "./pages/SignUp";
 import Offers from "./pages/Offers";
 import Header from "./components/Header";
+import { Bounce, ToastContainer } from "react-toastify";
 function App() {
   return (
     <>
@@ -21,6 +22,21 @@ function App() {
           <Route path="/offers" element={<Offers />} />
           <Route path="/forgotpassword" element={<ForgotPassword />} />
         </Routes>
+        <div className="grid place-items-center h-dvh bg-zinc-900/15">
+          <ToastContainer
+            position="bottom-center"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick={false}
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="dark"
+            transition={Bounce}
+          />
+        </div>
       </BrowserRouter>
     </>
   );

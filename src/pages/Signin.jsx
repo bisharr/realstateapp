@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
+import { Link } from "react-router";
+import GoogleButton from "./GoogleButton";
 function Signin() {
   const [formData, setFormData] = useState({
     email: "",
@@ -39,7 +41,7 @@ function Signin() {
                 id="password"
                 value={password}
                 onChange={onChange}
-                placeholder=" Enter Password"
+                placeholder={isPasswordVisible ? "Password🔓" : "Password💀"}
               />
               {isPasswordVisible ? (
                 <FaEyeSlash
@@ -53,7 +55,38 @@ function Signin() {
                 />
               )}
             </div>
+            <div className="flex justify-between gap-x-7 whitespace-nowrap text-sm sm:text-lg">
+              <p>
+                Don't have an account ?{" "}
+                <Link
+                  to="/signup"
+                  className="text-red-600 hover:text-red-700 transition-all duration-200 ease-in-out ml-1"
+                >
+                  Register
+                </Link>
+              </p>
+              <p>
+                <Link
+                  className="text-blue-600 hover:text-blue-700 transition-all ease-in-out duration-200"
+                  to="/forgotpassword"
+                >
+                  Forgot Password
+                </Link>
+              </p>
+            </div>
           </form>
+          {/* SignIn Button */}
+          <button
+            className="w-full bg-blue-600 text-white px-7 py-3 text-sm font-medium uppercase roundedn hover:shadow-lg active:bg-blue-800 shadow-md hover:bg-blue-700 transition-all duration-200 ease-in-out mt-3"
+            type="submit"
+          >
+            Sign In
+          </button>
+          {/* Or div */}
+          <div className="my-4 before:border-t flex before:flex-1 items-center before:border-e-gray-300 after:flex-1 after:border-gray-300 after:border-t">
+            <p className="text-center font-semibold mx-4">OR</p>
+          </div>
+          <GoogleButton />
         </div>
       </div>
     </section>
