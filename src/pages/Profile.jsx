@@ -1,7 +1,68 @@
-import React from "react";
-
+import React, { useState } from "react";
+import { getAuth } from "firebase/auth";
+import { signOut } from "firebase/auth";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router";
 function Profile() {
-  return <div>Profile</div>;
+  const auth = getAuth();
+  const [formData, setFormdata] = useState({
+    name: auth.currentUser.displayName,
+    email: auth.currentUser.email,
+  });
+  const { name, email } = formData;
+  const navigate = useNavigate();
+
+  async function handleSignOut() {
+    try {
+      await signOut(auth);
+      toast.success("Sign out successfully");
+      navigate("/");
+    } catch (error) {
+      toast.error(error);
+    }
+  }
+  return (
+    <>
+      <section className="max-w-6xl mx-auto flex justify-center items-center flex-col">
+        <h1 className=" text-3xl text-center mt-6 font-bold mb-2 ">
+          My Profile
+        </h1>
+        <div className="w-full md:w-[50%] mt-6 px-3">
+          <form>
+            {/* input of names and email */}
+            <input
+              type="text"
+              id="name"
+              value={name}
+              disabled
+              className="w-full px-4 py-2 text-xl text-gray-700 bg-white border border-gray-300 rounded transition-all ease-in-out"
+            />
+            <input
+              type="email"
+              id="email"
+              value={email}
+              disabled
+              className="w-full px-4 py-2 text-xl text-gray-700 bg-white border border-gray-300 rounded transition-all ease-in-out mt-6"
+            />
+            <div className=" mt-4 flex justify-between items-center whitespace-nowrap text-sm sm:text-lg">
+              <p className="flex items-center gap-x-3">
+                Do you want to change your name?
+                <span className="text-red-600 hover:text-red-700 transition-all ease-in-out cursor-pointer duration-200 ">
+                  Edit
+                </span>
+              </p>
+              <p
+                onClick={handleSignOut}
+                className="cursor-pointer text-blue-800 hover:text-blue-700 transition-all ease-in-out duration-200"
+              >
+                SignOut
+              </p>
+            </div>
+          </form>
+        </div>
+      </section>
+    </>
+  );
 }
 
 export default Profile;

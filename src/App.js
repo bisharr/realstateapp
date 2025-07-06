@@ -9,6 +9,7 @@ import SignUp from "./pages/SignUp";
 import Offers from "./pages/Offers";
 import Header from "./components/Header";
 import { Bounce, ToastContainer } from "react-toastify";
+import PrivateRoutte from "./components/PrivateRoutte";
 function App() {
   return (
     <>
@@ -16,8 +17,10 @@ function App() {
         <Header />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/profile" element={<Profile />} />
           <Route path="/signin" element={<Signin />} />
+          <Route path="/profile" element={<PrivateRoutte />}>
+            <Route path="/profile" element={<Profile />} />
+          </Route>
           <Route path="/signup" element={<SignUp />} />
           <Route path="/offers" element={<Offers />} />
           <Route path="/forgotpassword" element={<ForgotPassword />} />
