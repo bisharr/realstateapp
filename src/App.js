@@ -10,6 +10,7 @@ import Offers from "./pages/Offers";
 import Header from "./components/Header";
 import { Bounce, ToastContainer } from "react-toastify";
 import PrivateRoutte from "./components/PrivateRoutte";
+import CreateListing from "./pages/CreateListing";
 function App() {
   return (
     <>
@@ -18,6 +19,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/signin" element={<Signin />} />
+          <Route path="/create-listing" element={<CreateListing />} />
           <Route path="/profile" element={<PrivateRoutte />}>
             <Route path="/profile" element={<Profile />} />
           </Route>
