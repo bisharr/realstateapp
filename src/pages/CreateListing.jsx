@@ -7,13 +7,20 @@ function CreateListing() {
     name: "",
     bedrooms: 1,
     bathrooms: 1,
+    parking: "yes",
   });
-  const { type, name, bedrooms, bathrooms } = formData;
+  const { type, name, bedrooms, bathrooms, parking } = formData;
 
   function onchange() {
     setFormdata((prevS) => ({
       ...prevS,
       type: prevS.type === "rent" ? "sell" : "rent",
+    }));
+  }
+  function onparking() {
+    setFormdata((prevS) => ({
+      ...prevS,
+      parking: prevS.parking === "no" ? "yes" : "no",
     }));
   }
   return (
@@ -68,7 +75,7 @@ function CreateListing() {
             className="w-full px-4 py-2 text-xl text-gray-700 bg-white border border-gray-300 rounded transition-all ease-in-out mt-2 focus:textgray-700 focus:bg-white focus:border-slate-600 focus:outline-none disabled:bg-gray-100 disabled:cursor-not-allowed disabled:text-gray-400 disabled:border-gray-300 mb-6 "
           />
         </div>
-        <div className="flex gap-6 mb-6 items-center">
+        <div className="flex gap-6 mb-6 space-x-6 ">
           <div className="">
             <p className="text-lg font-semibold ">Beds</p>
             <input
@@ -79,7 +86,7 @@ function CreateListing() {
               min={1}
               required
               max={50}
-              className="px-4 py-2 text-xl text-gray-700 bg-white border border-gray-300 rounded transition-all ease-in-out mt-2 focus:textgray-700 focus:bg-white focus:border-slate-600 focus:outline-none disabled:bg-gray-100 disabled:cursor-not-allowed disabled:text-gray-400 disabled:border-gray-300 w-full"
+              className="px-4 py-2 text-xl text-gray-700 bg-white border border-gray-300 rounded transition-all ease-in-out mt-2 focus:textgray-700 focus:bg-white focus:border-slate-600 focus:outline-none disabled:bg-gray-100 disabled:cursor-not-allowed disabled:text-gray-400 disabled:border-gray-300 w-full text-center"
             />
           </div>
           <div className="">
@@ -92,9 +99,39 @@ function CreateListing() {
               min={1}
               required
               max={50}
-              className="px-4 py-2 text-xl text-gray-700 bg-white border border-gray-300 rounded transition-all ease-in-out mt-2 focus:textgray-700 focus:bg-white focus:border-slate-600 focus:outline-none disabled:bg-gray-100 disabled:cursor-not-allowed disabled:text-gray-400 disabled:border-gray-300 w-full"
+              className="px-4 py-2 text-xl text-gray-700 bg-white border border-gray-300 rounded transition-all ease-in-out mt-2 focus:textgray-700 focus:bg-white focus:border-slate-600 focus:outline-none disabled:bg-gray-100 disabled:cursor-not-allowed disabled:text-gray-400 disabled:border-gray-300 w-full text-center"
             />
           </div>
+        </div>
+        {/* parking */}
+        <p className="text-lg mt-6 font-semibold">Parking Parking</p>
+        <div className="flex mt-2 items-center gap-2">
+          <button
+            type="button"
+            id="yes"
+            value={parking}
+            className={`px-7 py-3 font-medium text-sm  shadow-md uppercase rounded hover:shadow-lg focus:shadow-lg active:shadow-lg transition-all duration-150 ease-in-out w-full text-center ${
+              parking === "yes"
+                ? "bg-slate-600 text-white"
+                : "bg-white text-black"
+            }`}
+            onClick={onparking}
+          >
+            YES
+          </button>
+          <button
+            type="button"
+            id="no"
+            value={parking}
+            className={`px-7 py-3 font-medium text-sm  shadow-md uppercase rounded hover:shadow-lg focus:shadow-lg active:shadow-lg transition-all duration-150 ease-in-out w-full text-center ${
+              parking === "no"
+                ? "bg-slate-600 text-white"
+                : "bg-white text-black"
+            }`}
+            onClick={onparking}
+          >
+            No
+          </button>
         </div>
       </form>
     </main>
