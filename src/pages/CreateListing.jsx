@@ -7,9 +7,29 @@ function CreateListing() {
     name: "",
     bedrooms: 1,
     bathrooms: 1,
-    parking: "yes",
+    parking: false,
+    furnished: false,
+    address: "",
+    description: "",
+    offer: false,
+    regularPrice: 0,
+    discountPrice: 0,
+    image: [],
   });
-  const { type, name, bedrooms, bathrooms, parking } = formData;
+  const {
+    type,
+    name,
+    bedrooms,
+    bathrooms,
+    parking,
+    furnished,
+    address,
+    description,
+    offer,
+    regularPrice,
+    discountPrice,
+    image,
+  } = formData;
 
   function onchange() {
     setFormdata((prevS) => ({
@@ -20,7 +40,13 @@ function CreateListing() {
   function onparking() {
     setFormdata((prevS) => ({
       ...prevS,
-      parking: prevS.parking === "no" ? "yes" : "no",
+      parking: prevS.parking === false ? true : false,
+    }));
+  }
+  function onfurnished() {
+    setFormdata((prevS) => ({
+      ...prevS,
+      furnished: prevS.furnished === false ? true : false,
     }));
   }
   return (
@@ -104,14 +130,14 @@ function CreateListing() {
           </div>
         </div>
         {/* parking */}
-        <p className="text-lg mt-6 font-semibold">Parking Parking</p>
+        <p className="text-lg mt-6 font-semibold">Parking Spot</p>
         <div className="flex mt-2 items-center gap-2">
           <button
             type="button"
-            id="yes"
+            id="parking"
             value={parking}
             className={`px-7 py-3 font-medium text-sm  shadow-md uppercase rounded hover:shadow-lg focus:shadow-lg active:shadow-lg transition-all duration-150 ease-in-out w-full text-center ${
-              parking === "yes"
+              parking === true
                 ? "bg-slate-600 text-white"
                 : "bg-white text-black"
             }`}
@@ -124,7 +150,7 @@ function CreateListing() {
             id="no"
             value={parking}
             className={`px-7 py-3 font-medium text-sm  shadow-md uppercase rounded hover:shadow-lg focus:shadow-lg active:shadow-lg transition-all duration-150 ease-in-out w-full text-center ${
-              parking === "no"
+              parking === false
                 ? "bg-slate-600 text-white"
                 : "bg-white text-black"
             }`}
@@ -132,6 +158,163 @@ function CreateListing() {
           >
             No
           </button>
+        </div>
+        {/* furnished */}
+        <p className="text-lg mt-6 font-semibold">Furnished</p>
+        <div className="flex mt-2 items-center gap-2">
+          <button
+            type="button"
+            id="yes"
+            value={furnished}
+            className={`px-7 py-3 font-medium text-sm  shadow-md uppercase rounded hover:shadow-lg focus:shadow-lg active:shadow-lg transition-all duration-150 ease-in-out w-full text-center ${
+              furnished === true
+                ? "bg-slate-600 text-white"
+                : "bg-white text-black"
+            }`}
+            onClick={onfurnished}
+          >
+            YES
+          </button>
+          <button
+            type="button"
+            id="no"
+            value={furnished}
+            className={`px-7 py-3 font-medium text-sm  shadow-md uppercase rounded hover:shadow-lg focus:shadow-lg active:shadow-lg transition-all duration-150 ease-in-out w-full text-center ${
+              furnished === false
+                ? "bg-slate-600 text-white"
+                : "bg-white text-black"
+            }`}
+            onClick={onfurnished}
+          >
+            No
+          </button>
+        </div>
+        {/* Address */}
+        <p className="text-lg mt-6 font-semibold">Address</p>
+        <div>
+          <textarea
+            id="address"
+            placeholder="Address"
+            value={address}
+            required
+            onChange={(e) =>
+              setFormdata((prevS) => ({
+                ...prevS,
+                address: e.target.value,
+              }))
+            }
+            className="w-full px-4 py-2 text-xl text-gray-700 bg-white border border-gray-300 rounded transition-all ease-in-out mt-2 focus:textgray-700 focus:bg-white focus:border-slate-600 focus:outline-none disabled:bg-gray-100 disabled:cursor-not-allowed disabled:text-gray-400 disabled:border-gray-300 mb-2 "
+          />
+        </div>
+        {/* Description */}
+        <p className="text-lg mt-3 font-semibold">Description</p>
+        <div>
+          <textarea
+            id="description"
+            placeholder="Description"
+            value={description}
+            required
+            onChange={(e) =>
+              setFormdata((prevS) => ({
+                ...prevS,
+                description: e.target.value,
+              }))
+            }
+            className="w-full px-4 py-2 text-xl text-gray-700 bg-white border border-gray-300 rounded transition-all ease-in-out mt-2 focus:textgray-700 focus:bg-white focus:border-slate-600 focus:outline-none disabled:bg-gray-100 disabled:cursor-not-allowed disabled:text-gray-400 disabled:border-gray-300 mb-2 "
+          />
+        </div>
+        {/* Offer */}
+        <p className="text-lg mt-3 font-semibold">Offer</p>
+        <div className="flex mt-2 items-center gap-2">
+          <button
+            type="button"
+            id="yes"
+            value={offer}
+            className={`px-7 py-3 font-medium text-sm  shadow-md uppercase rounded hover:shadow-lg focus:shadow-lg active:shadow-lg transition-all duration-150 ease-in-out w-full text-center ${
+              offer === true ? "bg-slate-600 text-white" : "bg-white text-black"
+            }`}
+            onClick={() =>
+              setFormdata((prevS) => ({
+                ...prevS,
+                offer: !prevS.offer,
+              }))
+            }
+          >
+            YES
+          </button>
+          <button
+            type="button"
+            id="no"
+            value={offer}
+            className={`px-7 py-3 font-medium text-sm  shadow-md uppercase rounded hover:shadow-lg focus:shadow-lg active:shadow-lg transition-all duration-150 ease-in-out w-full text-center ${
+              formData.offer === false
+                ? "bg-slate-600 text-white"
+                : "bg-white text-black"
+            }`}
+            onClick={() =>
+              setFormdata((prevS) => ({
+                ...prevS,
+                offer: !prevS.offer,
+              }))
+            }
+          >
+            No
+          </button>
+        </div>
+        {/* Regular Price */}
+        <p className="text-lg mt-6 font-semibold">Regular Price</p>
+        <div className="flex items-center gap-2">
+          <input
+            type="number"
+            id="regularPrice"
+            value={regularPrice}
+            onChange={(e) =>
+              setFormdata((prevS) => ({
+                ...prevS,
+                regularPrice: e.target.value,
+              }))
+            }
+            min={1}
+            max={750000000}
+            required
+            className="w-[30%] px-4 py-2 text-xl text-gray-700 bg-white border border-gray-300 rounded transition-all ease-in-out mt-2 focus:textgray-700 focus:bg-white focus:border-slate-600 focus:outline-none disabled:bg-gray-100 disabled:cursor-not-allowed disabled:text-gray-400 disabled:border-gray-300 mb-6 "
+          />
+          <p className="text-xl text-gray-700">$ / Month</p>
+        </div>
+        {/* Discount Price */}
+        <p className="text-lg mt-2 font-semibold">Discount Price</p>
+        <div>
+          <input
+            type="number"
+            id="discountPrice"
+            value={discountPrice}
+            onChange={(e) =>
+              setFormdata((prevS) => ({
+                ...prevS,
+                discountPrice: e.target.value,
+              }))
+            }
+            min={1}
+            max={750000000}
+            className="w-[30%] px-4 py-2 text-xl text-gray-700 bg-white border border-gray-300 rounded transition-all ease-in-out mt-2 focus:textgray-700 focus:bg-white focus:border-slate-600 focus:outline-none disabled:bg-gray-100 disabled:cursor-not-allowed disabled:text-gray-400 disabled:border-gray-300 mb-6 "
+          />
+        </div>
+        {/* Image Price */}
+        <p className="text-lg mt-2 font-semibold">Image</p>
+        <div>
+          <input
+            type="file"
+            id="image"
+            value={image}
+            accept=".jpg,.png,.jpeg"
+            onChange={(e) =>
+              setFormdata((prevS) => ({
+                ...prevS,
+                image: e.target.files[0],
+              }))
+            }
+            className="w-full px-4 py-2 text-xl text-gray-700 bg-white border border-gray-300 rounded transition-all ease-in-out mt-2 focus:textgray-700 focus:bg-white focus:border-slate-600 focus:outline-none disabled:bg-gray-100 disabled:cursor-not-allowed disabled:text-gray-400 disabled:border-gray-300 mb-6 "
+          />
         </div>
       </form>
     </main>
